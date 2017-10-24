@@ -1,12 +1,12 @@
 function forest=Find_BFS_forest(name)
 list=dlmread('list.txt');%read the .txt file
-len=size(list);
-n=list(1,1);
-nodelist=1:n;
-edgelist=Find_edge_list('list.txt');%use the function to get the edgelist
-new=[];
+len=size(list);% len is the lenght of the list show how many different edges there are
+n=list(1,1); %number of nodes
+nodelist=1:n; % number of the nodes variable to use in loop
+edgelist=Find_edge_list('list.txt');%use the function to get the edgelist talk to Lippner!
+new=[]; %new 0x0 matrix
 forest=[];
-k=1;
+k=1;%counter used in loop
 %% function for the BFS
 while sum(cellfun('isempty', edgelist))<n %check whether all the nodes in the edgelist have been used
     newcopy=new;
