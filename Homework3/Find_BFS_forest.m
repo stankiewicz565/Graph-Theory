@@ -1,14 +1,15 @@
 function forest=Find_BFS_forest(name)
-list=dlmread('list.txt');%read the .txt file
-len=size(list);% len is the lenght of the list show how many different edges there are
-n=list(1,1); %number of nodes
-nodelist=1:n; % number of the nodes variable to use in loop
-edgelist=Find_edge_list('list.txt');%use the function to get the edgelist talk to Lippner!
-new=[]; %new 0x0 matrix
+list=dlmread(name);%read the .txt file
+len=size(list);
+n=list(1,1);
+nodelist=1:n;
+edgelist=Find_edge_list(name);%use the function to get the edgelist
+new=[];
 forest=[];
-k=1;%counter used in loop
+k=1;
+a=nodelist;
 %% function for the BFS
-while sum(cellfun('isempty', edgelist))<n %check whether all the nodes in the edgelist have been used
+while isempty(a)==0 %check whether all the nodes in the have been used
     newcopy=new;
     new=[];
     if isempty(newcopy)==1
@@ -20,10 +21,10 @@ while sum(cellfun('isempty', edgelist))<n %check whether all the nodes in the ed
         node(forest(1,:))=[];
         i=forest(2,end);
         end
-        s=[min(node);i+1];
+        s=[min(node);0];
         forest=horzcat(forest,s);
         new=cell2mat(edgelist(1,min(node)));
-        forest=horzcat(forest,[new;zeros(1,size(new,2))+i+2]);
+        forest=horzcat(forest,[new;zeros(1,size(new,2))+1]);
     else 
         while k<=size(newcopy,2)%search the neighbors of new nodes
         new=[new,cell2mat(edgelist(1,newcopy(1,k)))];
@@ -39,8 +40,8 @@ while sum(cellfun('isempty', edgelist))<n %check whether all the nodes in the ed
     end
  end
   k=1;
+  a=nodelist;
+  a(forest(1,:))=[];
 end
-end
-
 
 
