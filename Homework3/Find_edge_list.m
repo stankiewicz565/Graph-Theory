@@ -19,9 +19,9 @@ else
             edgelist{1, i}=edgelist{1, i};%if yes, do not add the new element
         end%end the add new element
     else
-        edgelist{1, i}=edgelist{1, i};
+        edgelist{1,i}=edgelist{1,i};
     end
-    edgelist{1,i}=sort(edgelist{1,i})
+    edgelist{1,i}=sort(edgelist{1,i});
   end
   i=i+1;
  end

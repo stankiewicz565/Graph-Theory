@@ -19,19 +19,20 @@ while isempty(a)==0 %check whether all the nodes in the have been used
              i=-1;
         else
         node(forest(1,:))=[];
-        i=forest(2,end);
         end
         s=[min(node);0];
         forest=horzcat(forest,s);
         new=cell2mat(edgelist(1,min(node)));
         forest=horzcat(forest,[new;zeros(1,size(new,2))+1]);
-    else 
+    else
+        k=1;
         while k<=size(newcopy,2)%search the neighbors of new nodes
         new=[new,cell2mat(edgelist(1,newcopy(1,k)))];
         k=k+1;
         end
-        forest=[forest,[new;zeros(1,size(new,2))+i+1]];
+        new=unique(new);
         i=forest(2,end);
+        forest=horzcat(forest,[new;zeros(1,length(new))+i+1]);
     end
    %%  when finish the point i, just delete it from the eagelist
  for m=1:n
@@ -39,9 +40,10 @@ while isempty(a)==0 %check whether all the nodes in the have been used
     edgelist{1,m}=edgelist{1,m}(find(edgelist{1,m}~=forest(1,f)));%get the new edgelist without visted nodes
     end
  end
-  k=1;
   a=nodelist;
   a(forest(1,:))=[];
 end
+end
+
 
 
