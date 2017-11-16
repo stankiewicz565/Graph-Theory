@@ -12,11 +12,15 @@ if len<=1,
     answer=sprintf('please give more edges information%/n');
 else
 %label the node with black and white, set black to be 0, and white to be 1
-
+%exactly how does this work?
 for p=1:size(forest,2)
      bw(p)=(1+(-1)^forest(2,p))/2;
+     
 end
 information=[forest;bw];
+%is this correct? what exactlly are you trying to achive here??
+dips('information')
+disp(information)
 
 %cut the forest into small components
 i=0;
@@ -25,9 +29,13 @@ k=1;
       if information(2,k)==0
           i=i+1;
           complist{1,i}=[complist{1,i},information(:,k)];
+          disp('if')
+          disp(complist)
       else
           i=i;
           complist{1,i}=[complist{1,i},information(:,k)];
+          disp('else')
+          disp(complist)
       end
       k=k+1;
   end
