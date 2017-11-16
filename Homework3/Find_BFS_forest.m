@@ -6,7 +6,6 @@ nodelist=1:n;
 edgelist=Find_edge_list(name);%use the function to get the edgelist
 new=[];
 forest=[];
-k=1;
 a=nodelist;
 %% function for the BFS
 while isempty(a)==0 %check whether all the nodes in the have been used
@@ -14,43 +13,33 @@ while isempty(a)==0 %check whether all the nodes in the have been used
     new=[];
     if isempty(newcopy)==1
         node=nodelist;
-        disp('newcopy node = ')
-        disp(node)
         if isempty(forest)==1
              node=node;
-        disp('isempty node =')
-        disp (node)
-             i=-1;
         else
         node(forest(1,:))=[];
-        disp(node)
         end
         s=[min(node);0];
-        disp(s)
         forest=horzcat(forest,s);
-        disp(forest)
-        new=cell2mat(edgelist(1,min(node)));
-        forest=horzcat(forest,[new;zeros(1,size(new,2))+1]);
-        disp(forest)
+        new=cell2mat(edgelist(min(node),1));
+        forest=horzcat(forest,[new;zeros(1,length(new))+min(node)]);
     else
         k=1;
         while k<=size(newcopy,2)%search the neighbors of new nodes
-        new=[new,cell2mat(edgelist(1,newcopy(1,k)))];
-        disp('new')
-        disp(new)
+        new2=cell2mat(edgelist(newcopy(1,k),1));
+        new=[new,cell2mat(edgelist(newcopy(1,k),1))];
+        forest=[forest,[new2;zeros(1,length(new2))+newcopy(1,k)]];
+        for m=1:n
+            for f=1:length(new2)
+        edgelist{m,1}=edgelist{m,1}(find(edgelist{m,1}~=new2(f)));%get the new edgelist without visted nodes
+            end
+        end
         k=k+1;
         end
-        new=unique(new);
-        i=forest(2,end);
-        forest=horzcat(forest,[new;zeros(1,length(new))+i+1]);
     end
    %%  when finish the point i, just delete it from the eagelist
- %this is where we are doing to much need to go to the next point ans
- %search for its partners.
-   
-   for m=1:n
+ for m=1:n
     for f=1:size(forest,2)
-    edgelist{1,m}=edgelist{1,m}(find(edgelist{1,m}~=forest(1,f)));%get the new edgelist without visted nodes
+    edgelist{m,1}=edgelist{m,1}(find(edgelist{m,1}~=forest(1,f)));%get the new edgelist without visted nodes
     end
  end
   a=nodelist;
