@@ -1,13 +1,18 @@
 function [part1, part2]=Find_partition(A)
 %get the D
+%this is not making a square matrix its just a single row of zeros
+
 D=zeros(size(A));
+
 for i=1:size(A,1)
   D(i,i)=nnz(A(i,:));
 end
+disp(D)
 %calculate delta
-P=inv(D)*A;
+P=pinv(D)*A;
+disp(P)
 delta=eye(size(A))-P;
-
+disp(delta)
 %calculate the eigenvalues of delta
 [V,mu]=eigs(delta,2,'SR');
 %Find the eigenvector of corresponding to the eigenvalue mu2(second smallest mu). Denote this vector by y.
